@@ -1,0 +1,46 @@
+host: localhost:8080
+info:
+  contact:
+    email: eacholwong@gmail.com
+    name: Luckyboys
+    url: https://github.com/Luckyboys
+  description: user business logic service
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: user service
+  version: "0.1"
+paths:
+  /api/paymentgateway/fuyou/callback:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: fuyou payment service will send notification when user paid order
+      operationId: Notify
+      parameters:
+      - description: notification message body
+        in: formData
+        name: req
+        required: true
+        type: string
+      responses:
+        "200":
+          description: result
+          schema:
+            type: string
+      summary: fuyou callback pay notifications
+      tags:
+      - callback
+  /ping:
+    get:
+      description: Just test service is running
+      operationId: Ping
+      responses:
+        "200":
+          description: PONG
+          schema:
+            type: string
+      summary: Test service state
+      tags:
+      - ping
+swagger: "2.0"

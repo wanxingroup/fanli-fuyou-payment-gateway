@@ -1,0 +1,68 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "user business logic service",
+        "title": "user service",
+        "contact": {
+            "name": "Luckyboys",
+            "url": "https://github.com/Luckyboys",
+            "email": "eacholwong@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "0.1"
+    },
+    "host": "localhost:8080",
+    "paths": {
+        "/api/paymentgateway/fuyou/callback": {
+            "post": {
+                "description": "fuyou payment service will send notification when user paid order",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "tags": [
+                    "callback"
+                ],
+                "summary": "fuyou callback pay notifications",
+                "operationId": "Notify",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "notification message body",
+                        "name": "req",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "result",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "description": "Just test service is running",
+                "tags": [
+                    "ping"
+                ],
+                "summary": "Test service state",
+                "operationId": "Ping",
+                "responses": {
+                    "200": {
+                        "description": "PONG",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

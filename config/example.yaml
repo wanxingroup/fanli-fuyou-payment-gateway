@@ -1,0 +1,43 @@
+web:
+  enable: true
+  ip: 127.0.0.1
+  port: 8080
+  mode: debug
+  readWriteTimeout: 60s
+rpc:
+  enable: true
+  ip: 127.0.0.1
+  port: 8088
+log:
+  level: debug
+mysql:
+  common:
+    host: 127.0.0.1
+    port: 3306
+    username: root
+    password:
+    database: fanli_fuyou_payment_gateway
+redis:
+  common:
+    host: 127.0.0.1
+    port: 6379
+environment: debug
+fuyou:
+  organizationCode: 08M0026894
+  host: spay-mc.fuioupay.com
+  privatePemPath: /tmp/fuyou_private.pem
+  publicPemPath: /tmp/fuyou_public.pem
+callbackHost: merchant-test.wanxingrowth.com
+rpcServices:
+  card:
+    host: 127.0.0.1
+    port: 8092
+    connectTimeout: 3s
+  order:
+    host: 127.0.0.1
+    port: 8096
+    connectTimeout: 3s
+  payment:
+    host: 127.0.0.1
+    port: 8097
+    connectTimeout: 3s

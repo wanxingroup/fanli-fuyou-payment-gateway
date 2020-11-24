@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package fuyou_payment_gateway.pkg.rpc.protos;
+
+option go_package = "protos";
+
+import "fuyou_payment_gateway_common.proto";
+
+// Pay service definition
+service PayController {
+    rpc PrePay (PrePayRequest) returns (PrePayReply) {
+    }
+    rpc CloseTransaction (CloseTransactionRequest) returns (CloseTransactionReply) {
+    }
+    rpc QueryPayResult (QueryPayResultRequest) returns (QueryPayResultReply) {
+    }
+}
+
+enum SourceType {
+    UnknownService = 0; // 未知服务
+    CardService = 1; // 权益卡服务
+    OrderService = 2; // 订单服务
+    PaymentService = 3; //收款服务
+}
+
+enum PaymentType {
+    JSAPI = 0; // 公众号支付
+    FWC = 1; // 支付宝服务窗
+    LETPAY = 2; // 小程序
+}
+
+// 预支付请求参数
+message PrePayRequest {
+    // 来源ID
+    uint64 sourceId = 1;
+    // 使用渠道类型
+    SourceType sourceType = 2;
+    // 订单金额，单位：分
+    uint64 orderAmount = 3;
+    // 商家 ID
+    uint64 merchantId = 4;
+    // 富友商户号
+    string fuyouMerchantId = 5;
+    // 订单描述
+    string description = 6;
+    // 支付类型 JSAPI-公众号支付、FWC--支付宝服务窗、LETPAY-小程序
+    PaymentType payType = 7;
+    // 用户openId
+    string openId = 8;
+    // 用户 IP
+    string userIP = 9;
+    // 小程序或公众号 appId
+    string appId = 10;
+}
+
+// 预支付返回参数
+message PrePayReply {
+    // 支付事务流水号(渠道订单号)
+    uint64 transactionId = 1;
+    // 支付信息
+    string mobilePaymentString = 2;
+    // 错误信息
+    Error err = 3;
+}
+
+// 关闭支付事务请求参数
+message CloseTransactionRequest {
+    // 来源ID
+    uint64 sourceId = 1;
+    // 使用渠道类型
+    SourceType sourceType = 2;
+}
+
+// 关闭支付事务返回参数
+message CloseTransactionReply {
+    // 错误信息
+    Error err = 1;
+}
+
+// 支付状态查询请求参数（如果发现从支付中变更为已支付，则会触发支付成功的流程）
+message QueryPayResultRequest {
+    // 来源 ID
+    uint64 sourceId = 1;
+    // 来源 ID
+    SourceType sourceType = 2;
+    // 商家 ID
+    string merchantId = 3;
+}
+
+enum PayStatus {
+    Paying = 0;
+    Succeed = 1;
+    Failed = 2;
+    Closed = 3;
+    PartiallyRefunded = 8; // 部分已退款
+    AllRefunded = 9; // 全额已退款
+}
+
+// 支付状态查询返回参数
+message QueryPayResultReply {
+    // 支付状态
+    PayStatus payStatus = 1;
+    // 错误信息
+    Error err = 2;
+}
